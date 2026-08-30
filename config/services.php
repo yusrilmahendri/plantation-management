@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    'finance' => [
+        'service_token' => env('FINANCE_SERVICE_TOKEN'),
+        'base_url' => env('FINANCE_SERVICE_URL'),
+        'timeout' => (int) env('FINANCE_SERVICE_TIMEOUT', 15),
+        'hmac_secret' => env('FINANCE_HMAC_SECRET'),
+    ],
+
+    'integration' => [
+        'events_enabled' => (bool) env('INTEGRATION_EVENTS_ENABLED', false),
+        'event_version' => 1,
+        'queue' => env('INTEGRATION_QUEUE', 'integrations'),
+        'max_attempts' => (int) env('INTEGRATION_MAX_ATTEMPTS', 8),
+        'backoff' => [60, 300, 900, 3600],
+        'outbox_retention_days' => (int) env('INTEGRATION_OUTBOX_RETENTION_DAYS', 90),
+    ],
+
 ];

@@ -32,5 +32,7 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="FINANCE_SERVICE_TOKEN" value="testing-finance-service-token"/>
+        <env name="INTEGRATION_EVENTS_ENABLED" value="false"/>
     </php>
 </phpunit>
