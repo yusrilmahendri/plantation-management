@@ -3,30 +3,33 @@
 @section('title', 'Integrasi Finance')
 
 @section('content')
-    <div class="mb-6">
-        <h1 class="text-xl font-semibold text-slate-900">Integrasi Finance</h1>
-        <p class="mt-1 text-sm text-slate-600">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Integrasi Finance</h2>
+            <p class="page-description">
             Event keuangan dikirim lewat outbox. Operasi kebun tetap berhasil meski Finance sedang down.
-        </p>
-    </div>
-
-    <div class="mb-6 grid gap-4 sm:grid-cols-3">
-        <div class="rounded-lg border border-slate-200 bg-white p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Pending</p>
-            <p class="mt-1 text-2xl font-semibold">{{ $pendingCount }}</p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Failed</p>
-            <p class="mt-1 text-2xl font-semibold text-rose-700">{{ $failedCount }}</p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Last success</p>
-            <p class="mt-1 text-sm font-medium">{{ $lastSuccessfulAt?->format('d/m/Y H:i') ?: '—' }}</p>
-            <p class="mt-1 text-xs text-slate-500">Events {{ $eventsEnabled ? 'aktif' : 'nonaktif' }}</p>
+            </p>
         </div>
     </div>
 
-    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white">
+    <div class="mb-6 stat-grid">
+        <div class="stat-card" data-icon="PN">
+            <p class="stat-label">Pending</p>
+            <p class="stat-value">{{ $pendingCount }}</p>
+        </div>
+        <div class="stat-card" data-icon="FL">
+            <p class="stat-label">Failed</p>
+            <p class="stat-value text-rose-700">{{ $failedCount }}</p>
+        </div>
+        <div class="stat-card" data-icon="OK">
+            <p class="stat-label">Last success</p>
+            <p class="stat-value text-base">{{ $lastSuccessfulAt?->format('d/m/Y H:i') ?: '—' }}</p>
+            <p class="mt-2 text-xs text-slate-500">Events {{ $eventsEnabled ? 'aktif' : 'nonaktif' }}</p>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-responsive">
         <table class="min-w-full text-sm">
             <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
                 <tr>
@@ -58,5 +61,6 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 @endsection

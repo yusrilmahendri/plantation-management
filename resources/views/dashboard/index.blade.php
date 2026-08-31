@@ -3,34 +3,41 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Dashboard Management Kebun</h2>
+            <p class="page-description">Ringkasan operasional, stok, aktivitas, anggaran, dan penjualan untuk unit {{ $entity->name }}.</p>
+        </div>
+    </div>
+
+    <div class="stat-grid">
         @foreach ([
-            ['label' => 'Kebun aktif', 'value' => $plantationCount],
-            ['label' => 'Blok aktif', 'value' => $blockCount],
-            ['label' => 'Pekerja aktif', 'value' => $workerCount],
-            ['label' => 'Supplier aktif', 'value' => $supplierCount],
-            ['label' => 'Inventory aktif', 'value' => $inventoryCount],
-            ['label' => 'Stok rendah', 'value' => $lowStockCount],
-            ['label' => 'Anggaran Finance', 'value' => $budgetCount],
-            ['label' => 'Aktivitas bulan ini', 'value' => $activityCountThisMonth],
-            ['label' => 'Upah bulan ini (posted)', 'value' => \App\Support\Money::format($postedWagesThisMonth)],
-            ['label' => 'Pembelian bulan ini', 'value' => \App\Support\Money::format($purchaseValueThisMonth)],
-            ['label' => 'Upah belum dibayar', 'value' => \App\Support\Money::format($unpaidWages)],
-            ['label' => 'Panen bulan ini', 'value' => $harvestCountThisMonth],
-            ['label' => 'Penjualan bulan ini', 'value' => \App\Support\Money::format($salesThisMonth)],
-            ['label' => 'Pembayaran diterima bulan ini', 'value' => \App\Support\Money::format($receivedThisMonth)],
-            ['label' => 'Piutang penjualan', 'value' => \App\Support\Money::format($salesOutstanding)],
+            ['icon' => 'KB', 'label' => 'Kebun aktif', 'value' => $plantationCount],
+            ['icon' => 'BL', 'label' => 'Blok aktif', 'value' => $blockCount],
+            ['icon' => 'PK', 'label' => 'Pekerja aktif', 'value' => $workerCount],
+            ['icon' => 'SP', 'label' => 'Supplier aktif', 'value' => $supplierCount],
+            ['icon' => 'IV', 'label' => 'Inventory aktif', 'value' => $inventoryCount],
+            ['icon' => 'SR', 'label' => 'Stok rendah', 'value' => $lowStockCount],
+            ['icon' => 'AF', 'label' => 'Anggaran Finance', 'value' => $budgetCount],
+            ['icon' => 'AK', 'label' => 'Aktivitas bulan ini', 'value' => $activityCountThisMonth],
+            ['icon' => 'UP', 'label' => 'Upah bulan ini (posted)', 'value' => \App\Support\Money::format($postedWagesThisMonth)],
+            ['icon' => 'PB', 'label' => 'Pembelian bulan ini', 'value' => \App\Support\Money::format($purchaseValueThisMonth)],
+            ['icon' => 'UT', 'label' => 'Upah belum dibayar', 'value' => \App\Support\Money::format($unpaidWages)],
+            ['icon' => 'PN', 'label' => 'Panen bulan ini', 'value' => $harvestCountThisMonth],
+            ['icon' => 'PJ', 'label' => 'Penjualan bulan ini', 'value' => \App\Support\Money::format($salesThisMonth)],
+            ['icon' => 'BY', 'label' => 'Pembayaran diterima bulan ini', 'value' => \App\Support\Money::format($receivedThisMonth)],
+            ['icon' => 'PI', 'label' => 'Piutang penjualan', 'value' => \App\Support\Money::format($salesOutstanding)],
         ] as $card)
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">{{ $card['label'] }}</p>
-                <p class="mt-2 text-3xl font-semibold text-slate-900">{{ $card['value'] }}</p>
+            <div class="stat-card" data-icon="{{ $card['icon'] }}">
+                <p class="stat-label">{{ $card['label'] }}</p>
+                <p class="stat-value">{{ $card['value'] }}</p>
             </div>
         @endforeach
     </div>
 
     @if (count($productionGroupsThisMonth) > 0 || count($unsoldGroups) > 0)
         <div class="mt-8 grid gap-4 lg:grid-cols-2">
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="card p-5">
                 <h2 class="text-sm font-semibold text-slate-900">Produksi bulan ini</h2>
                 <ul class="mt-3 space-y-2 text-sm">
                     @forelse ($productionGroupsThisMonth as $group)
@@ -40,7 +47,7 @@
                     @endforelse
                 </ul>
             </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="card p-5">
                 <h2 class="text-sm font-semibold text-slate-900">Hasil panen belum terjual</h2>
                 <ul class="mt-3 space-y-2 text-sm">
                     @forelse ($unsoldGroups as $group)
