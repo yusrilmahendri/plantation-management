@@ -31,8 +31,8 @@ class InventoryItemController extends Controller
             ->paginate(15);
 
         $stocks = $this->stock->currentStocksFor($items->getCollection());
-        $monthStart = now()->startOfMonth()->toDateString();
-        $monthEnd = now()->endOfMonth()->toDateString();
+        $monthStart = now()->startOfMonth();
+        $monthEnd = now()->endOfMonth();
 
         $lowStockCount = InventoryItem::query()
             ->forEntity($plantationEntity)

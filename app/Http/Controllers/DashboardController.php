@@ -31,8 +31,10 @@ class DashboardController extends Controller
 
     public function show(PlantationEntity $plantationEntity): View
     {
-        $monthStart = now()->startOfMonth()->toDateString();
-        $monthEnd = now()->endOfMonth()->toDateString();
+        $monthStart = now()->startOfMonth();
+        $monthEnd = now()->endOfMonth();
+        $monthStartDate = $monthStart->toDateString();
+        $monthEndDate = $monthEnd->toDateString();
 
         $postedWagesThisMonth = WorkerPayroll::query()
             ->forEntity($plantationEntity)
@@ -81,8 +83,8 @@ class DashboardController extends Controller
                 ->whereBetween('harvest_date', [$monthStart, $monthEnd])
                 ->count(),
             'productionGroupsThisMonth' => $this->production->summary($plantationEntity, [
-                'period_start' => $monthStart,
-                'period_end' => $monthEnd,
+                'period_start' => $monthStartDate,
+                'period_end' => $monthEndDate,
             ])['groups'],
             'salesThisMonth' => Money::normalize(
                 HarvestSale::query()
