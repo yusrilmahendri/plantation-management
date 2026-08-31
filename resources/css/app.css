@@ -9,3 +9,50 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer components {
+    .plantation-shell {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .plantation-sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .plantation-sidebar-nav {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+
+    body.sidebar-open {
+        overflow: hidden;
+    }
+
+    .overflow-hidden:has(> table) {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (min-width: 64rem) {
+    body.sidebar-open {
+        overflow: auto;
+    }
+
+    .plantation-sidebar-nav {
+        padding-bottom: 0.75rem;
+    }
+}

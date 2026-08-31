@@ -30,19 +30,19 @@
             ];
         @endphp
 
-        <div class="lg:flex lg:min-h-screen">
-            <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full border-r border-slate-200 bg-white transition-transform lg:static lg:translate-x-0">
-                <div class="flex h-16 items-center border-b border-slate-200 px-5">
+        <div class="plantation-shell lg:flex">
+            <aside id="sidebar" class="plantation-sidebar fixed left-0 top-0 bottom-0 z-50 w-64 -translate-x-full border-r border-slate-200 bg-white transition-transform lg:sticky lg:top-0 lg:translate-x-0">
+                <div class="flex h-16 shrink-0 items-center border-b border-slate-200 px-5">
                     <div>
                         <p class="text-xs font-medium uppercase tracking-wide text-emerald-700">Manajemen Kebun</p>
                         <p class="truncate text-sm font-semibold text-slate-900">{{ $entity->name }}</p>
                     </div>
                 </div>
-                <nav class="space-y-1 p-3">
+                <nav class="plantation-sidebar-nav space-y-1 p-3">
                     @foreach ($nav as $item)
                         <a
                             href="{{ route($item['route'], $entity) }}"
-                            class="block rounded-lg px-3 py-2 text-sm font-medium {{ $item['active'] ? 'bg-emerald-50 text-emerald-800' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}"
+                            class="block min-h-11 rounded-lg px-3 py-2.5 text-sm font-medium {{ $item['active'] ? 'bg-emerald-50 text-emerald-800' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}"
                         >
                             {{ $item['label'] }}
                         </a>
@@ -50,12 +50,12 @@
                 </nav>
             </aside>
 
-            <div class="flex min-h-screen flex-1 flex-col lg:pl-0">
+            <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:pl-0">
                 <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 lg:px-8">
-                    <button id="sidebar-toggle" type="button" class="rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-700 lg:hidden">
+                    <button id="sidebar-toggle" type="button" class="min-h-11 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 lg:hidden" aria-controls="sidebar" aria-expanded="false">
                         Menu
                     </button>
-                    <h1 class="text-base font-semibold text-slate-900">@yield('title', 'Dasbor')</h1>
+                    <h1 class="min-w-0 truncate px-3 text-base font-semibold text-slate-900">@yield('title', 'Dasbor')</h1>
                     <span class="hidden text-xs text-slate-500 sm:inline">Akses tautan privat</span>
                 </header>
 
@@ -85,27 +85,42 @@
 
                     @yield('content')
                 </main>
+
+                <footer class="border-t border-slate-200 px-4 py-4 text-center text-xs text-slate-500 lg:px-8">
+                    Created by @Yusril Mahendri
+                </footer>
             </div>
         </div>
 
-        <div id="sidebar-overlay" class="fixed inset-0 z-30 hidden bg-slate-900/40 lg:hidden"></div>
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-900/40 lg:hidden"></div>
 
         <script>
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             const toggle = document.getElementById('sidebar-toggle');
 
+            const setSidebarOpen = (open) => {
+                sidebar?.classList.toggle('-translate-x-full', !open);
+                overlay?.classList.toggle('hidden', !open);
+                document.body.classList.toggle('sidebar-open', open);
+                toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+            };
+
             const closeSidebar = () => {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
+                setSidebarOpen(false);
             };
 
             toggle?.addEventListener('click', () => {
-                sidebar.classList.toggle('-translate-x-full');
-                overlay.classList.toggle('hidden');
+                setSidebarOpen(sidebar.classList.contains('-translate-x-full'));
             });
 
             overlay?.addEventListener('click', closeSidebar);
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeSidebar();
+                }
+            });
         </script>
     </body>
 </html>
